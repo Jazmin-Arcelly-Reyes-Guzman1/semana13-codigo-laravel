@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Events\ServicioSaved; #manual
+use App\Events\ServicioSaved; #manual
 use Intervention\Image\Facades\Image;#manual
 use Illuminate\Support\Facades\Storage;#manual
 use App\Models\Servicio;
@@ -63,12 +63,12 @@ class Servicios2Controller extends Controller
             $servicio->image = $request->file('image')->store('images');
             $servicio->save();
 
-            $image = Image::make (storage::get($servicio->image))
+            $image = Image::make(storage::get($servicio->image))
                 ->widen(600) //Redimensionamos la imagen a 600 px
                 ->limitColors(255) //Limitamos el color a 255
                 ->encode(); //Volvemos a codificar la nueva imagen
             //Sobreescribimos la misma imagen con la nueva imagen redimensionada
-            Storage:: put($servicio->image, (string) $image);
+            Storage::put($servicio->image, (string) $image);
             ServicioSaved::dispatch($servicio);
             return redirect()->route('servicios.index')->with('estado','El servicio fue creado correctamente');
         
@@ -112,12 +112,12 @@ class Servicios2Controller extends Controller
             $servicio->image = $request->file('image')->store('images'); //Le asignamos La imagen que sube
             $servicio->save(); //Finalmente guardamos en La Base de datos
             
-            $image = Image::make (storage::get($servicio->image))
+            $image = Image::make(storage::get($servicio->image))
                 ->widen(600) //Redimensionamos la imagen a 600 px
                 ->limitColors(255) //Limitamos el color a 255
                 ->encode(); //Volvemos a codificar la nueva imagen
             //Sobreescribimos la misma imagen con la nueva imagen redimensionada
-            Storage:: put($servicio->image, (string) $image);
+            Storage::put($servicio->image, (string) $image);
             ServicioSaved::dispatch($servicio);
 
         }else{
